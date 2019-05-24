@@ -1,4 +1,5 @@
 import tkinter as tk
+import platform
 
 
 class Calculatrice:
@@ -17,6 +18,7 @@ class Calculatrice:
         self.root.geometry("{}x{}".format(winWidth, winHeight))
 
         self.root.bind('<Button-1>', self.clic) # Gets coords when clic
+        self.root.bind('<Motion>', self.motion) # To change colors when moving mouse
         self.root.bind('<Key>', self.key) # Control with keys instead of mouse
 
         self.can = tk.Canvas(self.root, width=self.winWidth, height=self.winHeight, bg="white")
@@ -25,7 +27,7 @@ class Calculatrice:
         self.can.create_rectangle(0, 0, self.winWidth, self.screenSize, fill='#282828') #screen
         self.can.create_rectangle(0, self.screenSize, self.winWidth, self.winHeight, fill='#191919') #pad
 
-        self.onScreen = self.can.create_text(int(0.9 * self.winWidth), self.screenSize / 2, text=self.expression, anchor='e', fill='white', font=('System', 50)) # Disp calculation on screen
+        self.onScreen = self.can.create_text(int(0.9 * self.winWidth), self.screenSize / 2, text=self.expression, anchor='e', fill='white', font=fontScreen) # Disp calculation on screen
 
         self.clavier = [[7, 8, 9, '*'], [4, 5, 6, '/'], [1, 2, 3, '+'], [0, '.', '=', '-']]
 
@@ -36,6 +38,10 @@ class Calculatrice:
                 self.can.create_text(widgX, widgY, text=self.clavier[i][j], fill='white', font=('System', 50))
 
         self.root.mainloop()
+
+
+    def motion(self, event):
+        pass # To get done !!
 
 
     def key(self, event):
@@ -87,4 +93,8 @@ class Calculatrice:
             self.expression = ''
 
 
+if platform.system() == 'Darwin':
+    fontScreen = ('System', 50)
+else:
+    fontScreen = ('System', 40)
 calc1 = Calculatrice(400, 650, 150, 4)
