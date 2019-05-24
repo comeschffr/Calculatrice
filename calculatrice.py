@@ -18,7 +18,6 @@ class Calculatrice:
         self.root.geometry("{}x{}".format(winWidth, winHeight))
 
         self.root.bind('<Button-1>', self.clic) # Gets coords when clic
-        self.root.bind('<Motion>', self.motion) # To change colors when moving mouse
         self.root.bind('<Key>', self.key) # Control with keys instead of mouse
 
         self.can = tk.Canvas(self.root, width=self.winWidth, height=self.winHeight, bg="white")
@@ -38,10 +37,6 @@ class Calculatrice:
                 self.can.create_text(widgX, widgY, text=self.clavier[i][j], fill='white', font=('System', 50))
 
         self.root.mainloop()
-
-
-    def motion(self, event):
-        pass # To get done !!
 
 
     def key(self, event):
@@ -83,7 +78,7 @@ class Calculatrice:
 
     def result(self):
         try:
-            _result = eval(self.expression)
+            _result = round(eval(self.expression), 8)
             if _result == int(_result):
                 _result = int(_result)
             self.can.itemconfig(self.onScreen, text=_result)
