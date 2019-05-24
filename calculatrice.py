@@ -77,4 +77,4 @@ class Calculatrice:
             self.expression = ''
 
 
-calc1 = Calculatrice(400, 650, 300, 4)
+calc1 = Calculatrice(400, 650, 150, 4)
