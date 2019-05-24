@@ -3,14 +3,14 @@ import tkinter as tk
 
 class Calculatrice:
     def __init__(self):
-        # str type for calculus
-        self.expression = ""
+        
+        self.expression = ''
 
-        self.root = tk.Tk() # Initialize the window
+        self.root = tk.Tk()
         self.root.title('Calculatrice')
         self.root.geometry("400x650")
 
-        self.root.bind('<Button-1>', self.clic) # Get coords when clic
+        self.root.bind('<Button-1>', self.clic)
 
         self.can = tk.Canvas(self.root, width=400, height=650, bg="white")
         self.can.pack()
@@ -56,11 +56,15 @@ class Calculatrice:
         self.can.itemconfig(self.onScreen, text=self.expression)
 
     def result(self):
-        _result = eval(self.expression)
-        if _result == int(_result):
-            _result = int(_result)
-        self.can.itemconfig(self.onScreen, text=_result)
-        self.expression = str(_result)
+        try:
+            _result = eval(self.expression)
+            if _result == int(_result):
+                _result = int(_result)
+            self.can.itemconfig(self.onScreen, text=_result)
+            self.expression = str(_result)
+        except SyntaxError:
+            self.can.itemconfig(self.onScreen, text='Error')
+            self.expression = ''
 
 
 calc1 = Calculatrice()
