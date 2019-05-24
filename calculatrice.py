@@ -25,15 +25,15 @@ class Calculatrice:
         self.can.create_rectangle(0, 0, self.winWidth, self.screenSize, fill='#282828') #screen
         self.pad = self.can.create_rectangle(0, self.screenSize, self.winWidth, self.winHeight, fill='#191919') #pad
 
-        self.onScreen = self.can.create_text(370, 75, text=self.expression, anchor='e', fill='white', font='size 60') # Disp calculation on screen
+        self.onScreen = self.can.create_text(int(0.9 * self.winWidth), self.screenSize / 2, text=self.expression, anchor='e', fill='white', font='size 60') # Disp calculation on screen
 
         lines = [(' ' * 3) + '7' + (' ' * 7) + '8' + (' ' * 7) + '9' + (' ' * 7) + '*',
             (' ' * 3) + '4' + (' ' * 7) + '5' + (' ' * 7) + '6' + (' ' * 7) + '/',
             (' ' * 3) + '1' + (' ' * 7) + '2' + (' ' * 7) + '3' + (' ' * 7) + '+',
             (' ' * 3) + '0' + (' ' * 7) + ' . ' + (' ' * 7) + '=' + (' ' * 7) + '-']
 
-        for i in range(4):
-            self.can.create_text(0, (self.screenSize / 2 + (i + 1) * (self.heightKey)), text=lines[i], anchor='w', fill='white', font='size 50')
+        for i in range(self.widgNbColumn):
+            self.can.create_text(0, (self.screenSize + self.heightKey / 2 + i * (self.heightKey)), text=lines[i], anchor='w', fill='white', font='size 50')
 
         self.root.mainloop()
 
@@ -45,16 +45,18 @@ class Calculatrice:
     def clic(self, event):
         clavier = [[0, '.', '=', '-'], [1, 2, 3, '+'], [4, 5, 6, '/'], [7, 8, 9, '*']]
 
-        self.x, self.y = event.x, event.y
-        ligne = self.widgNbColumn - 1 - int((self.y - self.screenSize) / self.heightKey)
-        colonne = int(self.x / self.widthKey)
+        ligne = self.widgNbColumn - 1 - int((event.y - self.screenSize) / self.heightKey)
+        colonne = int(event.x / self.widthKey)
         
-        element = str(clavier[ligne][colonne])
-        
-        if element != '=':
-            self.add_to_expression(str(clavier[ligne][colonne]))
+        if event.y > self.screenSize:
+            element = str(clavier[ligne][colonne])
         else:
+            element = ''
+
+        if element == '=':
             self.result()
+        else:
+            self.add_to_expression(element)
 
 
     def add_to_expression(self, char):
@@ -75,4 +77,4 @@ class Calculatrice:
             self.expression = ''
 
 
-calc1 = Calculatrice(400, 650, 150, 4)
+calc1 = Calculatrice(400, 650, 300, 4)
