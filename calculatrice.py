@@ -3,14 +3,14 @@ import tkinter as tk
 
 class Calculatrice:
     def __init__(self):
-        
+        # str type for calculus
         self.expression = ""
 
-        self.root = tk.Tk()
+        self.root = tk.Tk() # Initialize the window
         self.root.title('Calculatrice')
         self.root.geometry("400x650")
 
-        self.root.bind('<Button-1>', self.clic)
+        self.root.bind('<Button-1>', self.clic) # Get coords when clic
 
         self.can = tk.Canvas(self.root, width=400, height=650, bg="white")
         self.can.pack()
