@@ -10,7 +10,7 @@ class Calculatrice:
         self.widgNbColumn = widgNbColumn
         self.widthKey = self.winWidth / self.widgNbColumn # Single key width
         self.heightKey = (self.winHeight - self.screenSize) / self.widgNbColumn # Single key height
-        self.expression = '' # str type for calculation
+        self.expression = '' # type str: contains calculation
 
         self.root = tk.Tk() # Initialize window
         self.root.title('Calculatrice')
@@ -18,19 +18,19 @@ class Calculatrice:
 
         self.root.bind('<Button-1>', self.clic) # Gets coords when clic
         self.root.bind('<Motion>', self.motion) # To change colors when moving mouse
-        self.root.bind('<Key>', self.key)
+        self.root.bind('<Key>', self.key) # Control with keys instead of mouse
 
         self.can = tk.Canvas(self.root, width=self.winWidth, height=self.winHeight, bg="white")
         self.can.pack()
 
         self.can.create_rectangle(0, 0, self.winWidth, self.screenSize, fill='#282828') #screen
-        self.pad = self.can.create_rectangle(0, self.screenSize, self.winWidth, self.winHeight, fill='#191919') #pad
+        self.can.create_rectangle(0, self.screenSize, self.winWidth, self.winHeight, fill='#191919') #pad
 
         self.onScreen = self.can.create_text(int(0.9 * self.winWidth), self.screenSize / 2, text=self.expression, anchor='e', fill='white', font=('System', 50)) # Disp calculation on screen
 
         self.clavier = [[7, 8, 9, '*'], [4, 5, 6, '/'], [1, 2, 3, '+'], [0, '.', '=', '-']]
 
-        for i in range(self.widgNbColumn):
+        for i in range(self.widgNbColumn): # disp different symbols
             widgY = self.screenSize + self.heightKey / 2 + i * (self.heightKey)
             for j in range(len(self.clavier[i])):
                 widgX = (self.widthKey / 2) + (j * self.widthKey)
@@ -40,16 +40,16 @@ class Calculatrice:
 
 
     def motion(self, event):
-        pass
+        pass # To get done !!
 
 
     def key(self, event):
         chars = ['0', '.', '-', '1', '2', '3', '+', '4', '5', '6', '/', '7', '8', '9', '*']
-        if event.char in chars:
+        if event.char in chars: # Classic keys
             self.add_to_expression(event.char)
-        elif event.keysym == 'Return':
+        elif event.keysym == 'Return': # <Return> key gives result
             self.result()
-        elif event.keysym in ['Escape', 'Tab']:
+        elif event.keysym in ['Escape', 'Tab']: # <Escape> or <Tab> clears screen
             self.clear_screen()
 
 
