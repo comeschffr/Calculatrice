@@ -28,15 +28,13 @@ class Calculatrice:
 
         self.onScreen = self.can.create_text(int(0.9 * self.winWidth), self.screenSize / 2, text=self.expression, anchor='e', fill='white', font=('System', 50)) # Disp calculation on screen
 
-        self.clavier = [[0, '.', '=', '-'], [1, 2, 3, '+'], [4, 5, 6, '/'], [7, 8, 9, '*']]
-       
-        lines = [(' ' * 3) + '7' + (' ' * 7) + '8' + (' ' * 7) + '9' + (' ' * 7) + '*',
-            (' ' * 3) + '4' + (' ' * 7) + '5' + (' ' * 7) + '6' + (' ' * 7) + '/',
-            (' ' * 3) + '1' + (' ' * 7) + '2' + (' ' * 7) + '3' + (' ' * 7) + '+',
-            (' ' * 3) + '0' + (' ' * 7) + ' . ' + (' ' * 7) + '=' + (' ' * 7) + '-']
+        self.clavier = [[7, 8, 9, '*'], [4, 5, 6, '/'], [1, 2, 3, '+'], [0, '.', '=', '-']]
 
         for i in range(self.widgNbColumn):
-            self.can.create_text(0, (self.screenSize + self.heightKey / 2 + i * (self.heightKey)), text=lines[i], anchor='w', fill='white', font=('System', 50))
+            widgY = self.screenSize + self.heightKey / 2 + i * (self.heightKey)
+            for j in range(len(self.clavier[i])):
+                widgX = (self.widthKey / 2) + (j * self.widthKey)
+                self.can.create_text(widgX, widgY, text=self.clavier[i][j], fill='white', font=('System', 50))
 
         self.root.mainloop()
 
@@ -56,7 +54,7 @@ class Calculatrice:
 
 
     def clic(self, event):
-        ligne = self.widgNbColumn - 1 - int((event.y - self.screenSize) / self.heightKey)
+        ligne = int((event.y - self.screenSize) / self.heightKey)
         colonne = int(event.x / self.widthKey)
         
         if event.y > self.screenSize:
